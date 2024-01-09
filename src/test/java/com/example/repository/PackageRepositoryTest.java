@@ -50,4 +50,18 @@ public class PackageRepositoryTest {
         final List<PackageEntity> packageEntities = packageRepository.findByCreatedAtAfter(dateTime, PageRequest.of(0, 1, Sort.by("packageSeq").descending()));
 
     }
+
+    @Test
+    void test_updateCountAndPeriod() {
+        PackageEntity packageEntity = new PackageEntity();
+        packageEntity.setPackageName("바디 챌린지 이벤트 4개월");
+        packageEntity.setPeriod(90);
+        packageRepository.save(packageEntity);
+
+        int updatedCount = packageRepository.updateCountAndPeriod(packageEntity.getPackageSeq(), 30, 60);
+        final PackageEntity updatedPackageEntity = packageRepository.findById(packageEntity.getPackageSeq()).get();
+
+        Assertions.assertEquals(30, packageEntity.getCount());
+        Assertions.assertEquals(120, packageEntity.getPeriod());
+    }
 }
