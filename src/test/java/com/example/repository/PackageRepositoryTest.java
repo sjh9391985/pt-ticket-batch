@@ -64,4 +64,16 @@ public class PackageRepositoryTest {
         Assertions.assertEquals(30, packageEntity.getCount());
         Assertions.assertEquals(120, packageEntity.getPeriod());
     }
+
+    @Test
+    void test_delete() {
+        PackageEntity packageEntity = new PackageEntity();
+        packageEntity.setPackageName("제거할 이용권");
+        packageEntity.setCount(1);
+        PackageEntity newPacageEntity = packageRepository.save(packageEntity);
+
+        packageRepository.deleteById(newPacageEntity.getPackageSeq());
+
+        Assertions.assertTrue(packageRepository.findById(newPacageEntity.getPackageSeq()).isPresent());
+    }
 }
