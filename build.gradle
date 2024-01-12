@@ -29,8 +29,8 @@ dependencies {
 	annotationProcessor "org.springframework.boot:spring-boot-configuration-processor" // @ConfigurationProperties
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 
-	// mysql
-	runtimeOnly 'mysql:mysql-connector-java'
+	// MySQL JDBC 드라이버 의존성 추가
+	runtimeOnly 'mysql:mysql-connector-java:8.0.23'
 
 	// lombok
 	compileOnly 'org.projectlombok:lombok'
