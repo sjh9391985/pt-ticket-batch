@@ -2,6 +2,7 @@ package com.example.job.pass;
 
 import com.example.repository.pass.PassEntity;
 import com.example.repository.pass.PassStatus;
+import lombok.RequiredArgsConstructor;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.Step;
 import org.springframework.batch.core.configuration.annotation.JobBuilderFactory;
@@ -19,23 +20,17 @@ import org.springframework.context.annotation.Configuration;
 import javax.persistence.EntityManagerFactory;
 
 import java.time.LocalDateTime;
+import java.util.HashMap;
 
 import static com.fasterxml.jackson.databind.type.LogicalType.Map;
 
+@RequiredArgsConstructor
 @Configuration
 public class ExpirePassesJobConfig {
 
     private final JobBuilderFactory jobBuilderFactory;
     private final StepBuilderFactory stepBuilderFactory;
     private final EntityManagerFactory entityManagerFactory;
-
-    @Autowired
-    public ExpirePassesJobConfig(JobBuilderFactory jobBuilderFactory, StepBuilderFactory stepBuilderFactory, EntityManagerFactory entityManagerFactory) {
-        this.jobBuilderFactory = jobBuilderFactory;
-        this.stepBuilderFactory = stepBuilderFactory;
-        this.entityManagerFactory = entityManagerFactory;
-    }
-
 
     @Bean
     public Job expirePassesJob() {
@@ -52,7 +47,7 @@ public class ExpirePassesJobConfig {
                 .reader(expirePassesItemReader())
                 .processor(expirePassesItemProcessor())
                 .writer(expirePassesItemWriter())
-                .build()
+                .build();
     }
 
     /**
@@ -62,12 +57,16 @@ public class ExpirePassesJobConfig {
     @Bean
     @StepScope
     public JpaCursorItemReader<PassEntity> expirePassesItemReader() {
+        HashMap<String, Object> map = new HashMap<>();
+        map.put("status", PassStatus.PROGRESSED);
+        map.put("endedAt", LocalDateTime.now());
+
         return new JpaCursorItemReaderBuilder<PassEntity>()
                 .name("expirePassesItemReader")
                 .entityManagerFactory(entityManagerFactory)
                 // 상태(status)가 진행중이며, 종료일시(endedAt)이 현재 시점보다 과거일 경우 만료 대상이 됩니다.
                 .queryString("select p from PassEntity p where p.status = :status and p.endedAt <= :endedAt")
-                .parameterValues(Map.of("status", PassStatus.PROGRESSED, "endedAt", LocalDateTime.now()))
+                .parameterValues(map)
                 .build();
     }
 

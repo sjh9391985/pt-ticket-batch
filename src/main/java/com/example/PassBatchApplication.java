@@ -16,7 +16,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
 @Slf4j
-@EnableBatchProcessing
+@EnableBatchProcessing // 배치기능 활성화
 @SpringBootApplication
 public class PassBatchApplication {
 
