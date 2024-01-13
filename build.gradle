@@ -45,7 +45,7 @@ dependencies {
 	annotationProcessor 'org.mapstruct:mapstruct-processor:1.5.2.Final'
 
 	// hibernate-types
-//	implementation 'com.vladmihalcea:hibernate-types-52:2.19.2'
+	implementation 'com.vladmihalcea:hibernate-types-52:2.19.2'
 
 	// csv
 //	implementation 'com.opencsv:opencsv:5.7.0'
