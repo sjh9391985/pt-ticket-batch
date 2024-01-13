@@ -1,8 +1,8 @@
 package com.example.repository.pass;
 
-import org.junit.jupiter.api.Named;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
+import org.mapstruct.Named;
 import org.mapstruct.ReportingPolicy;
 import org.mapstruct.factory.Mappers;
 
