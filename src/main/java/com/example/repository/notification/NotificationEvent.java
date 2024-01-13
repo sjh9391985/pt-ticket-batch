@@ -1,2 +1,5 @@
-package com.example.repository.notification;public enum NotificationEvent {
+package com.example.repository.notification;
+
+public enum NotificationEvent {
+    BEFODE_CLASS
 }
