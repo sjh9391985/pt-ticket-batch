@@ -1,2 +1,5 @@
-package com.example.repository.user;public enum UserStatus {
+package com.example.repository.user;
+
+public enum UserStatus {
+    ACTIVE, INACTIVE
 }
